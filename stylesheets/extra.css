@@ -1,0 +1,31 @@
+/* 引入霞鹜文楷 */
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css');
+
+/* 全局设置字体 */
+body {
+  font-family: 'LXGW WenKai', serif !important;
+}
+
+/* 确保导航栏也使用自定义字体 */
+.md-nav {
+  font-family: 'LXGW WenKai', serif !important;
+}
+
+/* 标题使用自定义字体 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'LXGW WenKai', serif !important;
+}
+
+/* 正文内容使用自定义字体 */
+.md-content {
+  font-family: 'LXGW WenKai', serif !important;
+}
+
+/* macOS 风格代码字体 */
+code, pre, .md-typeset code {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, 'Liberation Mono', monospace !important;
+  font-size: 0.9em !important;
+  font-feature-settings: "liga" 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
