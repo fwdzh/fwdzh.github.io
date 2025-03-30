@@ -147,6 +147,7 @@ nav:
     - _1: cp_solving/1.md
   - contest:
     - Codeforces:
+      - Codeforces Round 1014 (Div. 2): cp_solving/Codeforces/2092.md
       - Codeforces Round 1013 (Div. 3): cp_solving/Codeforces/2091.md
       - Codeforces Round 1012 (Div. 2): cp_solving/Codeforces/2090.md
       - Codeforces Round 1011 (Div. 2): cp_solving/Codeforces/2085.md
