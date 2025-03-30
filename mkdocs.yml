@@ -199,5 +199,6 @@ nav:
     - 生成指定难度数量的随机CF题目: misc/rndcfproblem.md
     - 通过自定义域名访问github pages: misc/customdomain.md
     - win vscode配置: misc/vscodesetting.md
+  - 友情链接: links.html
   - 页面更新:
     - main: update/20250115.md
