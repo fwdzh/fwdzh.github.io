@@ -183,6 +183,7 @@ nav:
     - 字符串:
       - KMP: algorithm/string/KMP.md
     - 数据结构:
+      - 树状数组: algorithm/datastructure/Fenwick.md
       - 线段树: algorithm/datastructure/SegmentTree.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
