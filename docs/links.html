@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>友情链接</title>
-    <link rel="icon" href="">
+    <link rel="icon" href="https://s21.ax1x.com/2025/03/31/pEsaDjU.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -113,14 +114,14 @@
 
         .link-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .link-card:hover::before {
             width: 8px;
         }
 
-        .link-icon {
+        /*.link-icon {
             width: 50px;
             height: 50px;
             background: var(--primary-color);
@@ -131,6 +132,27 @@
             margin-right: 1.5rem;
             color: white;
             font-size: 1.5rem;
+        }*/
+
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 1.5rem;
+            overflow: hidden;
+            /* 确保图片不超出容器 */
+            background: transparent;
+            /* 移除原来的背景色 */
+            padding: 0;
+            /* 移除内边距 */
+        }
+
+        .link-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 保持图片比例并填满容器 */
+            display: block;
         }
 
         .link-content {
@@ -170,13 +192,14 @@
             .container {
                 padding: 1rem;
             }
-            
+
             .links-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -185,93 +208,181 @@
                 <button class="filter-btn active" data-category="all">全部</button>
                 <button class="filter-btn" data-category="blog">Blog</button>
                 <button class="filter-btn" data-category="algo">Algorithm</button>
+                <button class="filter-btn" data-category="web">Website</button>
                 <button class="filter-btn" data-category="game">Game</button>
+                <button class="filter-btn" data-category="me">About Me</button>
             </div>
         </div>
-        
+
         <div class="links-grid" id="linksContainer"></div>
     </div>
 
     <script>
+
         // 链接数据
         const linksData = [
             {
                 title: "Mashiro's Blog",
                 url: "https://skadi.wuyi.host/",
                 category: "blog",
-                icon: "<i class='fas fa-code'></i>",
+                // icon: "<i class='fas fa-code'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsanAA.jpg",
                 desc: ""
             },
             {
                 title: "Yugang's Blog",
                 url: "https://yuanshen.wuyi.host/",
                 category: "blog",
-                icon: "<i class='fas fa-code'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsae7d.jpg",
+                desc: ""
+            },
+
+            {
+                title: "My Codeforces",
+                url: "https://codeforces.com/profile/Zhangwuji",
+                category: "me",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsUITs.jpg",
                 desc: ""
             },
             {
                 title: "Mashiro's Codeforces",
                 url: "https://codeforces.com/profile/qiangwomingziNMB",
                 category: "algo",
-                icon: "<i class='fas fa-palette'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsanAA.jpg",
                 desc: ""
             },
             {
                 title: "Yugang's Codeforces",
                 url: "https://codeforces.com/profile/sakanaka",
                 category: "algo",
-                icon: "<i class='fas fa-palette'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsae7d.jpg",
                 desc: ""
             },
             {
                 title: "Tanxf's Codeforces",
                 url: "https://codeforces.com/profile/tanxf",
                 category: "algo",
-                icon: "<i class='fas fa-palette'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsal1f.jpg",
                 desc: ""
             },
+            {
+                title: "Tovi's Codeforces",
+                url: "https://codeforces.com/profile/hbmy031440403",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsaouD.jpg",
+                desc: ""
+            },
+            {
+                title: "Sailor's Blog",
+                url: "https://blog.csdn.net/score69",
+                category: "blog",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsdpDg.jpg",
+                desc: ""
+            },
+            {
+                title: "Wuchao's Website",
+                url: "https://123.wuyi.host",
+                category: "web",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsa2NR.jpg",
+                desc: ""
+            },
+            {
+                title: "Muyuxi's Codeforces",
+                url: "https://codeforces.com/profile/Muyuxii",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/3972050/title/f10d6b897ae8c9f8.jpg",
+                desc: ""
+            },
+            {
+                title: "GUAIKATTO's Codeforces",
+                url: "https://codeforces.com/profile/GUAIKATTO",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/4281054/title/b48cbf408f26cf69.jpg",
+                desc: ""
+            },
+            {
+                title: "LHJ's Codeforces",
+                url: "https://codeforces.com/profile/kujinganlai111",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/2848110/title/4bb0c929deff297b.jpg",
+                desc: ""
+            },
+
+
             {
                 title: "Genshin Impact",
                 url: "https://ys.mihoyo.com",
                 category: "game",
-                icon: "<i class='fas fa-graduation-cap'></i>",
-                desc: "专业在线学习平台"
+                icon: "https://s21.ax1x.com/2025/03/31/pEsaDjU.jpg",
+                desc: "原神，启动！"
             },
             {
                 title: "Arknights",
                 url: "https://ak.hypergryph.com/#index",
                 category: "game",
-                icon: "<i class='fas fa-graduation-cap'></i>",
-                desc: "专业在线学习平台"
+                icon: "https://media.prts.wiki/thumb/4/4c/%E9%81%93%E5%85%B7_%E6%8A%80%E5%B7%A7%E6%A6%82%E8%A6%81%C2%B7%E5%8D%B73.png/160px-%E9%81%93%E5%85%B7_%E6%8A%80%E5%B7%A7%E6%A6%82%E8%A6%81%C2%B7%E5%8D%B73.png",
+                desc: "明日方舟，启动！"
             },
             // 可继续添加更多数据...
         ];
 
         // 初始化
+        // function initLinks() {
+        //     const container = document.getElementById('linksContainer');
+        //     container.innerHTML = linksData.map(link => `
+        //         <a href="${link.url}" class="link-card" data-category="${link.category}">
+        //             <div class="link-icon">${link.icon}</div>
+        //             <div class="link-content">
+        //                 <h3 class="link-title">${link.title}</h3>
+        //                 <p class="link-desc">${link.desc}</p>
+        //                 <span class="link-category">${link.category}</span>
+        //             </div>
+        //         </a>
+        //     `).join('');
+        // }
+        // 修改后的初始化函数（带错误处理）
         function initLinks() {
-            const container = document.getElementById('linksContainer');
-            container.innerHTML = linksData.map(link => `
-                <a href="${link.url}" class="link-card" data-category="${link.category}">
-                    <div class="link-icon">${link.icon}</div>
+            try {
+                const container = document.getElementById('linksContainer');
+                if (!container) throw new Error('找不到linksContainer元素');
+
+                const htmlString = linksData.map(link => {
+                    if (!link.icon) console.warn('缺少图标路径:', link.title);
+                    return `
+                <a href="${link.url}" class="link-card" data-category="${link.category}" target="_blank">
+                    <div class="link-icon">
+                        ${link.icon ?
+                            `<img src="${link.icon}" alt="${link.title}图标">` :
+                            `<div class="placeholder-icon"></div>`}
+                    </div>
                     <div class="link-content">
                         <h3 class="link-title">${link.title}</h3>
-                        <p class="link-desc">${link.desc}</p>
+                        ${link.desc ? `<p class="link-desc">${link.desc}</p>` : ''}
                         <span class="link-category">${link.category}</span>
                     </div>
                 </a>
-            `).join('');
+            `;
+                }).join('');
+
+                container.innerHTML = htmlString;
+                console.log('成功生成', linksData.length, '个链接卡片');
+            } catch (error) {
+                console.error('初始化失败:', error);
+                container.innerHTML = `<p class="error">加载友情链接失败，请稍后重试</p>`;
+            }
         }
+
 
         // 分类过滤
         document.getElementById('filter').addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
-                document.querySelectorAll('.filter-btn').forEach(btn => 
+                document.querySelectorAll('.filter-btn').forEach(btn =>
                     btn.classList.remove('active'));
                 e.target.classList.add('active');
-                
+
                 const category = e.target.dataset.category;
                 document.querySelectorAll('.link-card').forEach(card => {
-                    card.style.display = (category === 'all' || 
+                    card.style.display = (category === 'all' ||
                         card.dataset.category === category) ? 'flex' : 'none';
                 });
             }
@@ -291,4 +402,5 @@
         initLinks();
     </script>
 </body>
+
 </html>
