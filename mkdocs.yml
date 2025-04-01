@@ -187,6 +187,7 @@ nav:
       - KMP: algorithm/string/KMP.md
     - 数据结构:
       - 树状数组: algorithm/datastructure/Fenwick.md
+      - 笛卡尔树: algorithm/datastructure/Cartesian-tree.md
       - 线段树: algorithm/datastructure/SegmentTree.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
@@ -208,5 +209,5 @@ nav:
   - About:
     - 关于我: about/me.md
     - 友情链接: about/links.html
-  - 页面更新:
-    - main: update/20250115.md
+  # - 页面更新:
+  #   - main: update/20250115.md
