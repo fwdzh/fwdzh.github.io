@@ -139,6 +139,7 @@ nav:
         - 第三场: cp_solving/2025hdu-spring/03.md
         - 第一场: cp_solving/2025hdu-spring/01.md
     - 省赛&邀请赛:
+      - 2023年第五届河南省CCPC大学生程序设计竞赛: XCPC/Provincial/23Henan.md
       - 2024 CCPC 全国邀请赛（山东）暨山东省大学生程序设计竞赛: XCPC/Invitational/24Shandong.md
       - 2024 年陕西省第十二届国际大学生程序设计竞赛省赛: XCPC/Provincial/2024Shaanxi.md
       - 2024年四川省大学生程序设计竞赛: XCPC/Provincial/2024Sichuan.md
@@ -152,11 +153,12 @@ nav:
   - contest:
     - Codeforces:
       - Codeforces Round 1015, Div. 1 + Div. 2: cp_solving/Codeforces/2084.md
+      - Educational Codeforces Round 177: cp_solving/Codeforces/2086.md 
       - Codeforces Round 1014 (Div. 2): cp_solving/Codeforces/2092.md
       - Codeforces Round 1013 (Div. 3): cp_solving/Codeforces/2091.md
       - Codeforces Round 1012 (Div. 2): cp_solving/Codeforces/2090.md
       - Codeforces Round 1011 (Div. 2): cp_solving/Codeforces/2085.md
-      - Educational Codeforces Round 176: cp_solving/Codeforces/2075.md 
+      - Educational Codeforces Round 176: cp_solving/Codeforces/2075.md
       - Codeforces Round 1010 (Div. 2) unrated: cp_solving/Codeforces/2082.md
       - Codeforces Round 1009 (Div. 3): cp_solving/Codeforces/2074.md
       - Codeforces Round 1008 (Div. 2): cp_solving/Codeforces/2078.md
