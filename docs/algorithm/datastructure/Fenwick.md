@@ -12,7 +12,7 @@
 
 ## 单点修改，区间查询
 
-[P3374 【模板】树状数组 1](https://www.luogu.com.cn/problem/P3374)
+### [P3374 【模板】树状数组 1](https://www.luogu.com.cn/problem/P3374)
 
 注意 add 时，可以判一下 $i$ 不为 $0$ ，否则哪天没准死循环。。。ask 也可以尽量写成 $i > 0$ ，这样碰到不小心有负数过来也没事。
 
@@ -70,7 +70,7 @@ void ChatGptDeepSeek()
 
 ## 区间修改，单点查询
 
-[P3368 【模板】树状数组 2](https://www.luogu.com.cn/problem/P3368)
+### [P3368 【模板】树状数组 2](https://www.luogu.com.cn/problem/P3368)
 
 其实是不是并不一定能区间修改。。区间加可以。如果能想到用差分，那就是普通的模板了。
 
@@ -105,3 +105,7 @@ void ChatGptDeepSeek()
     }
 }
 ```
+
+### [P5057 [CQOI2006] 简单题](https://www.luogu.com.cn/problem/P5057)
+
+跟上面那题差不多。。但我没看出来，于是拿线段树做了，发现原来树状数组做这么简单。。虽然也没有写多久。。
