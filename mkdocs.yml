@@ -202,10 +202,10 @@ nav:
       - 二分图: algorithm/graph/BipartiteGraph.md
     - 其他:
       - 对拍: algorithm/others/duipai.md
+      - VScode Snippets: algorithm/others/snippets.md
   # - 开发:
   #   - 前端: develepment/frontend/main.md
   - 杂项:
-    - VSCode个人snippets: misc/snippet.md
     - github基础操作及github pages: misc/gitbasic.md
     - windows双系统删除ubuntu arch: misc/deleteubuntu.md
     - windows创建恢复分区: misc/winrecovery.md
