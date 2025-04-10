@@ -191,6 +191,7 @@ nav:
     - 2025-01-18: daily/2025/2025_0118.md
   - Algorithm:
     - 字符串:
+      - 字典树: algorithm/string/trie.md
       - KMP: algorithm/string/KMP.md
     - 数据结构:
       - 树状数组: algorithm/datastructure/Fenwick.md
