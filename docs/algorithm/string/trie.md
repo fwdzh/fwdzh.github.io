@@ -123,3 +123,73 @@ void ChatGptDeepSeek() // Date: 2025-04-10
     cout<<ans<<'\n';
 }
 ```
+
+#### [CF2093G](https://codeforces.com/contest/2093/problem/G)
+
+用 trie 找是否有两个数的异或值大于等于 $x$ 。
+
+只需要多一点小小的二进制技巧，就可以做出来了，上次杭电某个位运算题。
+
+每一个  $trie_{cur,x}$ 的值都是不同的，可以用来记状态，这里是用来记下标最大的这一位为 $1$ 的数字的下标。
+
+```cpp
+void ChatGptDeepSeek() // Date: 2025-04-10
+{                      // Time: 20:26:45
+    int n, k;
+    cin >> n >> k;
+    vector<vi> trie(n * 31, vi(2));
+    vi p(n * 32);
+    int tot = 0, ans = n + 1;
+    auto Insert = [&](int Val, int idx)
+    {
+        int cur = 0;
+        for (int i = 30; i >= 0; i--)
+        {
+            int x = Val >> i & 1;
+            if (trie[cur][x] == 0)
+                trie[cur][x] = ++tot;
+            cur = trie[cur][x];
+            p[cur] = idx;
+        }
+    };
+    auto Find = [&](int Val)
+    {
+        int cur = 0, now = 0, L = -1;
+        for (int i = 30; i >= 0; i--)
+        {
+            int x = Val >> i & 1;
+            int y = k >> i & 1;
+            if (y)
+            {
+                if (!trie[cur][x ^ 1])
+                    return L;
+                cur = trie[cur][x ^ 1];
+            }
+            else
+            {
+                if (trie[cur][x ^ 1])
+                    cmax(L, p[trie[cur][x ^ 1]]);
+                if (trie[cur][x] == 0)
+                    return L;
+                cur = trie[cur][x];
+            }
+        }
+        cmax(L,p[cur]);
+        return L;
+    };
+    for (int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        int L=Find(x);
+        if(L>0) ans=min(ans,i-L+1);
+        Insert(x, i);
+    }
+    if (k == 0)
+        cout << "1\n";
+    else if (ans == n + 1)
+        cout << "-1\n";
+    else
+        cout << ans << '\n';
+}
+```
