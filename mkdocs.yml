@@ -10,7 +10,6 @@ copyright: Copyright &copy; 理塘丁真
 
 theme:
   name: material
-  custom_dir: 'overrides'
   # Don't include MkDocs' JavaScript
   include_search_page: true
   search_index_only: true
