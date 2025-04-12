@@ -1,23 +1,46 @@
-<!-- footer.html -->
+<!-- overrides/partials/footer.html -->
 <div id="audio-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #fafafa; padding: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-  <!-- 显示当前歌曲名称 -->
-  <div id="current-song" style="margin-bottom: 8px; font-size: 14px; color: #333;">当前歌曲：<span id="song-title">未播放</span></div>
+  <!-- 折叠/展开按钮 -->
+  <button id="collapse-audio" style="position: absolute; top: -10px; right: -10px; background: #1976d2; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">—</button>
   
-  <!-- 音频元素 -->
-  <audio id="bg-music" loop>
-    您的浏览器不支持音频播放。
-  </audio>
-  
-  <!-- 控制按钮 -->
-  <div id="audio-controls" style="display: flex; gap: 8px;">
-    <button id="prev-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">上一首</button>
-    <button id="toggle-music" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">播放背景音乐</button>
-    <button id="next-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">下一首</button>
+  <!-- 包裹播放器所有内容的容器 -->
+  <div id="audio-content">
+    <!-- 显示当前歌曲名称 -->
+    <div id="current-song" style="margin-bottom: 8px; font-size: 14px; color: #333;">当前歌曲：<span id="song-title">未播放</span></div>
+    
+    <!-- 音频元素 -->
+    <audio id="bg-music" loop>
+      您的浏览器不支持音频播放。
+    </audio>
+    
+    <!-- 控制按钮 -->
+    <div id="audio-controls" style="display: flex; gap: 8px;">
+      <button id="prev-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">上一首</button>
+      <button id="toggle-music" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">播放背景音乐</button>
+      <button id="next-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">下一首</button>
+    </div>
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // 折叠/展开播放器区域逻辑
+    const collapseButton = document.getElementById("collapse-audio");
+    const audioContent = document.getElementById("audio-content");
+    let isCollapsed = false;
+    collapseButton.addEventListener("click", function() {
+        if (isCollapsed) {
+            // 展开区域
+            audioContent.style.display = "block";
+            collapseButton.textContent = "—";
+        } else {
+            // 收起区域
+            audioContent.style.display = "none";
+            collapseButton.textContent = "+";
+        }
+        isCollapsed = !isCollapsed;
+    });
+    
     // 定义歌曲列表，可以自行扩展或修改
     const songs = [
       { title: "宋雨琦 - Giant", src: "{{ base_url }}/media/宋雨琦 - Giant.FLAC" },
@@ -94,5 +117,5 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.addEventListener("ended", function () {
       nextButton.click();
     });
-  });
+});
 </script>
