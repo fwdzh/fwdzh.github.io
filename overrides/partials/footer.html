@@ -1,10 +1,17 @@
 <!-- overrides/partials/footer.html -->
-<div id="audio-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-    <audio id="bg-music" src="{{ base_url }}/media/宋雨琦 - Giant.FLAC" loop>
-      您的浏览器不支持音频播放。
-    </audio>
-    <button id="toggle-music" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
-      播放背景音乐
-    </button>
-  </div>
+<div id="audio-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #fafafa; padding: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+  <!-- 显示当前歌曲名称 -->
+  <div id="current-song" style="margin-bottom: 8px; font-size: 14px; color: #333;">当前歌曲：<span id="song-title">未播放</span></div>
   
+  <!-- 音频元素 -->
+  <audio id="bg-music" loop>
+    您的浏览器不支持音频播放。
+  </audio>
+  
+  <!-- 控制按钮 -->
+  <div id="audio-controls" style="display: flex; gap: 8px;">
+    <button id="prev-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">上一首</button>
+    <button id="toggle-music" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">播放背景音乐</button>
+    <button id="next-song" style="padding: 8px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">下一首</button>
+  </div>
+</div>
