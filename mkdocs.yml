@@ -130,8 +130,6 @@ extra_javascript:
 extra_css:
   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
   - stylesheets/extra.css
-  - stylesheets/custom.css
-  # - stylesheets/ex1.css
 nav:
   - 首页: index.md
   - XCPC:
