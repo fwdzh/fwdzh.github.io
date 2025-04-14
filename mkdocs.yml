@@ -133,6 +133,7 @@ nav:
   - 首页: index.md
   - XCPC:
     - 区域赛:
+      - 第 49 届 ICPC 国际大学生程序设计竞赛区域赛上海站: XCPC/Regional/2024Shanghai.md
       - 第 49 届 ICPC 国际大学生程序设计竞赛区域赛杭州站: XCPC/Regional/2024Hangzhou.md
     - 2025“钉耙编程”中国大学生算法设计春季联赛:
         - 第四场: cp_solving/2025hdu-spring/04.md
