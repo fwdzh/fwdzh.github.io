@@ -218,184 +218,68 @@ void ChatGptDeepSeek() // Date: 2025-04-13
 需要注意的是，负数整除挺烦的。。
 
 ```cpp
-void ChatGptDeepSeek() // Date: 2025-04-13
-{                      // Time: 18:10:15
+void ChatGptDeepSeek() // Date: 2025-04-14
+{                      // Time: 16:54:03 
     int n;
-    cin >> n;
-    vector<ll> a(n + 1);
-    vector<ll> b(n + 1), c(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    for (int i = 1; i <= n; i++)
-        cin >> b[i];
-    for (int i = 1; i <= n; i++)
-        cin >> c[i];
-    sort(c.begin() + 1, c.end());
-
-    auto check = [&](ll H)
-    {
-        vector<int> p(n + 1), s(n + 1);
-        int M = 0;
-        for (int i = 1; i <= n; i++)
-        {
-            if (a[i] > 0)
-            {
-                // ll need = (H - b[i]) / a[i] + ((H - b[i]) % a[i] != 0);
-                ll need = (H - b[i]) / a[i];
-                if ((H - b[i]) >= 0 && (H - b[i]) % a[i] != 0)
-                    need++;
-                // 大于等于3.5的话 大于等于4 没问题
-                // 大于等于-3.5的话 大于等于-3就行
-
-                // 小于等于0.5 要改
-                // 大于等于-0.5不用改
-                int idx = lower_bound(c.begin() + 1, c.end(), need) - c.begin();
-                if (idx <= n)
-                {
-                    s[idx]++;
-                    assert(idx >= 1 && idx <= n);
-                }
-            }
-            else if (a[i] == 0)
-            {
-                if (b[i] >= H)
-                {
-                    // s[1]++;
-                    p[n]++;
-                    // M++;
-                }
-            }
-            else
-            {
-                ll need = (H - b[i]) / a[i];
-                // if (need < 0 && (H - b[i]) % a[i] != 0)
-                //     need--;
-                // ll need = (H - b[i]) / a[i];
-                // 小于等于3.5时 小于等于3就行
-                // 小于等于-3.5时，小于等-4
-                // ax+b>=H
-                // x<=(H-b)/a
-                // 所以减1 没问题阿
-
-                // 但可能是+0.5 也可能是-0.5
-                if (H - b[i] >= 0 && (H - b[i]) % a[i] != 0)
-                    need--;
-                int idx = upper_bound(c.begin() + 1, c.end(), need) - c.begin() - 1;
-
-                // cerr << i << " " << need << " " << idx << " \n";
-
-                if (idx >= 1)
-                {
-                    assert(idx >= 1 && idx <= n);
-
-                    p[idx]++;
-                }
-            }
+    cin>>n;
+    vector<int>a(n+1),c(n+1);
+    vector<ll>b(n+1);
+    for(int i=1;i<=n;i++) cin>>a[i];
+    for(int i=1;i<=n;i++) cin>>b[i];
+    for(int i=1;i<=n;i++) cin>>c[i];
+    sort(c.begin()+1,c.end());
+    auto check=[&](ll H){
+        vector<int>pre(n+1),suf(n+1);
+        //pre表示x的下标小于等于i才满足 suf表示下标大于等于i才满足
+        for(int i=1;i<=n;i++){
+            if(a[i]>0){
+                ll need=(H-b[i])/a[i]; //找大于等于这个的
+                if(H-b[i]>0&&(H-b[i])%a[i]) need++;
+                int idx=lower_bound(c.begin()+1,c.end(),need)-c.begin();
+                if(idx<=n) suf[idx]++;
+            }else if(a[i]<0){
+                ll need=(H-b[i])/a[i];
+                if(H-b[i]>0&&(H-b[i])%a[i]) need--;
+                int idx=upper_bound(c.begin()+1,c.end(),need)-c.begin()-1;
+                if(idx>=1) pre[idx]++;
+            }else if(b[i]>=H) pre[n]++;
+        }//1 0 1 0
+        // for(int i=1;i<=n;i++) cerr<<pre[i]<<" \n"[i==n]; for(int i=1;i<=n;i++) cerr<<suf[i]<<" \n"[i==n];
+        ll sum=0,xum=0;
+        for(int i=1;i<=n;i++) sum+=pre[i];
+        for(int i=1;i<=n;i++){
+            xum=min(xum+pre[i],ll(i));
+            sum-=pre[i];//要前面的贡献加上后面的贡献
+            pre[i]=min(xum+sum,ll(i));
+            pre[i]=max(pre[i],pre[i-1]);
         }
-        // for (int i = 1; i <= n; i++)
-        //     cerr << p[i] << " \n"[i == n];
-        // for (int i = 1; i <= n; i++)
-        //     cerr << s[i] << " \n"[i == n];
-        // 1 0 1 0
-        for (int i = 1; i <= n; i++)
-            p[i] = min(p[i], i);
-        for (int i = 1; i <= n; i++)
-            s[i] = min(s[i], n - i + 1);
-        vector<int> p1 = p, s1 = s;
-
-        // for (int i = 1; i <= n; i++)
-        //     p[i] += p[i - 1];
-        for (int i = n - 1; i >= 1; i--)
-            p[i] += p[i + 1];
-        for (int i = 1; i <= n; i++)
-            p[i] = min(p[i], i);
-
-        for (int i = 1; i <= n; i++)
-            s[i] += s[i - 1];
-        // for (int i = n - 1; i >= 1; i--)
-        //     s[i] += s[i + 1];
-        for (int i = 1; i <= n; i++)
-            s[i] = min(s[i], n - i + 1);
-
-        for (int i = n - 1; i >= 1; i--)
-        {
-            // s1[i] += s1[i + 1];
-            s1[i] = s1[i + 1] + min(n - i + 1 - s1[i + 1], s1[i]);
+        for(int i=1;i<=n;i++) sum+=suf[i];
+        xum=0;
+        for(int i=n;i>=1;i--){
+            xum=min(xum+suf[i],ll(n-i+1));
+            sum-=suf[i];
+            suf[i]=min(xum+sum,ll(n-i+1));
+            if(i<n) suf[i]=max(suf[i],suf[i+1]);
         }
-        for (int i = 1; i <= n; i++)
-        {
-            // p1[i] += p1[i - 1];
-            p1[i] = p1[i - 1] + min(i - p1[i - 1], p1[i]);
-        }
-
-        for (int i = 1; i <= n; i++)
-        {
-            s1[i] = min(s1[i], n - i + 1);
-            p1[i] = min(p1[i], i);
-        }
-        for (int i = 1; i <= n; i++)
-            p[i] += p1[i - 1];
-        for (int i = 1; i < n; i++)
-            s[i] += s1[i + 1];
-
-        for (int i = 1; i <= n; i++)
-        {
-            // p[i - 1] = max(p[i - 1], p[i]);
-            p[i] = min(p[i], i);
-            s[i] = min(s[i], n - i + 1);
-        }
-        for (int i = n - 1; i >= 1; i--)
-        {
-            // s[i + 1] = max(s[i], s[i + 1]);
-            s[i] = min(s[i], n - i + 1);
-        }
-        for (int i = 1; i <= n; i++)
-        {
-            // p[i - 1] = max(p[i - 1], p[i]);
-            p[i] = min(p[i], i);
-            s[i] = min(s[i], n - i + 1);
-        }
-        // for (int i = 1; i <= n; i++)
-        //     cerr << p[i] << " \n"[i == n];
-        // for (int i = 1; i <= n; i++)
-        //     cerr << s[i] << " \n"[i == n];
-        if (p[n] >= (n + 1) / 2 || s[1] >= (n + 1) / 2)
-            return true;
-
-        for (int i = 1; i + 1 <= n; i++)
-        {
-            if (p[i] + s[i + 1] >= (n + 1) / 2)
-                return true;
-        }
+        // for(int i=1;i<=n;i++) cerr<<pre[i]<<" \n"[i==n]; for(int i=1;i<=n;i++) cerr<<suf[i]<<" \n"[i==n];
+        if(suf[1]>=(n+1)/2||pre[n]>=(n+1)/2) return true;
+        for(int i=1;i+1<=n;i++)
+            if(pre[i]+suf[i+1]>=(n+1)/2) return true;
         return false;
     };
-    ll lo = ll(-2e18)-1, hi = ll(2e18)+1, ans = 0;
-    while (lo < hi - 1)
-    {
-        ll mi = (lo + hi) / 2;
-        if (check(mi))
-            lo = mi;
+    ll l=-2e18,r=2e18,ans=0;
+    while(l<=r){
+        ll mid=(l+r)>>1;
+        if(check(mid))
+            l=mid+1,ans=mid;
         else
-            hi = mi;
-        // ll mid = (lo + hi) / 2;
-        // if (check(mid))
-        //     lo = mid + 1, ans = mid;
-        // else
-        //     hi = mid - 1;
+            r=mid-1;
     }
-    // cout << ans << '\n';
-    cout << lo << '\n';
-    // if(n==28308)
-    //     assert(check(999999997000000000));
-    // assert(check(lo + 1) == false);
-    // assert(lo != -4e18);
-    // cerr << check(11) << '\n';
-    // cerr << check(25) << '\n';
-    // cout << check(9) << '\n';
-    // cout << check(10) << '\n';
-    // cout << check(13) << '\n';
+    cout<<ans<<'\n';
 }
 ```
+
+可以的，都AC一次了，再写一次还是花了40分钟。算这个贡献可能也花时间，还有一定要注意的就是负数整除时的向下取整或向上取整。。可以多写点 if 的。
 
 ## I
 
