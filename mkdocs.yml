@@ -148,7 +148,7 @@ nav:
       - 2025年蓝桥杯省赛B组 C/C++: XCPC/Lanqiao/2025/Provincial/CPP_B.md
     
   - 刷题记录: 
-    - 动态规划: cp_solving/2025/0407.md
+    - 动态规划练习: cp_solving/2025/0407.md
     - 部分做题记录: cp_solving/2025/0313.md
     - 成长记录: cp_solving/0313.md
     - 2025年3月1日-3月9日: cp_solving/2025/0301.md
@@ -203,6 +203,7 @@ nav:
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
     - 图论:
+      - 树链剖分: algorithm/graph/HLD.md
       - 二分图: algorithm/graph/BipartiteGraph.md
     - 其他:
       - 对拍: algorithm/others/duipai.md
