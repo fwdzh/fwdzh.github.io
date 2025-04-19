@@ -305,7 +305,7 @@ void ChatGptDeepSeek() // Date: 2025-04-17
 
 ### [P3258 [JLOI2014] 松鼠的新家](https://www.luogu.com.cn/problem/P3258)
 
-同样模板题，但这里是单点查询，所以可以用树状数组。
+同样模板题，但这里是单点查询，所以可以用树状数组。这里是按编号输出。。。害我当时找好久。
 
 ```cpp
 constexpr int N = int(3e5)+5;
@@ -394,5 +394,285 @@ void ChatGptDeepSeek() // Date: 2025-04-18
     }
     for(int i=1;i<=n;i++)
         cout<<ans[i]<<"\n";
+}
+```
+
+## 点权转边权
+
+其实没啥不一样，就是边权转成深度更深的那个点的点权。更新的时候，只有两点在同一重链时，需要把区间改成 $dfn_x+1,dfn_y$ ， 其他地方是不需要改的。记得线段树也要判一下范围。
+
+### [P3038 [USACO11DEC] Grass Planting G](https://www.luogu.com.cn/problem/P3038)
+
+基础操作，路径边权 $+1$，查询某条边的长度，所以树状数组其实也能做。
+
+```cpp
+constexpr int N = 1e5+5;
+int siz[N],fa[N],dep[N],top[N],son[N],dfn[N];
+ll tr[N<<2],tag[N<<2];
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+
+void push_down(int p,int l,int r)
+{
+    if(tag[p]){
+        tr[ls]+=(mi-l+1)*tag[p];
+        tr[rs]+=(r-mi)*tag[p];
+        tag[ls]+=tag[p],tag[rs]+=tag[p];
+        tag[p]=0;
+    }
+}
+void upd(int p,int l,int r,int lx,int rx)
+{
+    if(lx>rx) return;
+    if(l>=lx&&r<=rx){
+        tr[p]+=(r-l+1);
+        tag[p]+=1;
+        return;
+    }
+    push_down(p,l,r);
+    if(lx<=mi) upd(ls,l,mi,lx,rx);
+    if(rx>mi) upd(rs,mi+1,r,lx,rx);
+    tr[p]=tr[ls]+tr[rs];
+}
+int query(int p,int l,int r,int i)
+{
+    if(l==r) return tr[p];
+    push_down(p,l,r);
+    if(i<=mi) return query(ls,l,mi,i);
+    return query(rs,mi+1,r,i);
+}
+
+void ChatGptDeepSeek() // Date: 2025-04-19
+{                      // Time: 18:06:21 
+    int n,m;
+    cin>>n>>m;
+    vector<vi>g(n+1,vi());
+    for(int i=1;i<n;i++){
+        int u,v;
+        cin>>u>>v;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1;
+        dep[u]=dep[pre]+1;
+        fa[u]=pre;
+        for(auto v:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            if(son[u]==0||siz[v]>siz[son[u]])
+                son[u]=v;
+            siz[u]+=siz[pre];
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto v:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    while(m--){
+        char ch;
+        int u,v;
+        cin>>ch>>u>>v;
+        if(ch=='P'){
+            while(top[u]!=top[v]){
+                if(dep[top[u]]<dep[top[v]]) swap(u,v);
+                // cerr<<dfn[top[u]]+1<<" "<<dfn[u]<<"\n";
+                upd(1,1,n,dfn[top[u]],dfn[u]);
+                u=fa[top[u]];
+            }
+            if(dep[u]>dep[v]) swap(u,v);
+            // cerr<<dfn[u]+1<<" "<<dfn[v]<<" \n";
+            upd(1,1,n,dfn[u]+1,dfn[v]);
+        }else{
+            if(dep[u]<dep[v]) swap(u,v);
+            // cerr<<"u: "<<u<<" "<<dfn[u]<<'\n';
+            cout<<query(1,1,n,dfn[u])<<'\n';
+        }
+    }
+}
+```
+
+### [P4315 月下“毛景树”](https://www.luogu.com.cn/problem/P4315)
+
+也是基础的边权转点权，线段树操作是区间置为定值和区间加。感觉树剖的题蓝色的都很板啊，虽然只写了三个蓝题。先再自己跟题单写点。然后再去看看剩下的视频的内容（）。他有两集，每集两小时，但是我只把第一集看了四十分钟。
+
+不得不难受的是，`tr[p]+=w` 写成了 `tr[p]=w` ，一直没看出来，还是让 gpt 帮忙看了一下的，就这一个错。
+
+```cpp
+constexpr int N = int(1e5)+5;
+int siz[N],fa[N],top[N],son[N],dep[N],dfn[N];
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+
+ll tr[N<<2],t1[N<<2],t2[N<<2];
+
+void pushdown(int p,int l,int r)
+{
+    if(t1[p]){
+        assert(t2[p]==0);
+        tr[ls]=tr[rs]=t1[p];
+        t1[ls]=t1[rs]=t1[p];
+        t2[ls]=t2[rs]=0;
+        t1[p]=0;
+    }else if(t2[p]){
+        tr[ls]+=t2[p],tr[rs]+=t2[p];
+
+        if(t1[ls]) t1[ls]+=t2[p];
+        else t2[ls]+=t2[p];
+        
+        if(t1[rs]) t1[rs]+=t2[p];
+        else t2[rs]+=t2[p];
+        
+        t2[p]=0;
+    }
+}
+void change(int p,int l,int r,int i,int x)
+{
+    if(l==r){
+        tr[p]=x;
+        return;
+    }
+    pushdown(p,l,r);
+    if(i<=mi) change(ls,l,mi,i,x);
+    else change(rs,mi+1,r,i,x);
+    tr[p]=max(tr[ls],tr[rs]);
+}
+void cover(int p,int l,int r,int lx,int rx,int w)
+{
+    if(lx>rx) return;
+    if(l>=lx&&r<=rx){
+        tr[p]=w;
+        t1[p]=w,t2[p]=0;
+        return;
+    }
+    pushdown(p,l,r);
+    if(lx<=mi) cover(ls,l,mi,lx,rx,w);
+    if(rx>mi) cover(rs,mi+1,r,lx,rx,w);
+    tr[p]=max(tr[ls],tr[rs]);
+}
+void add(int p,int l,int r,int lx,int rx,int w)
+{
+    if(lx>rx) return;
+    if(l>=lx&&r<=rx){
+        tr[p]+=w;
+        if(t1[p]) t1[p]+=w;
+        else t2[p]+=w;
+        return;
+    }
+    pushdown(p,l,r);
+    if(lx<=mi) add(ls,l,mi,lx,rx,w);
+    if(rx>mi) add(rs,mi+1,r,lx,rx,w);
+    tr[p]=max(tr[ls],tr[rs]);
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(lx>rx) return 0;
+    if(l>=lx&&r<=rx) return tr[p];
+    pushdown(p,l,r);
+    int res=0;
+    if(lx<=mi) cmax(res,query(ls,l,mi,lx,rx));
+    if(rx>mi) cmax(res,query(rs,mi+1,r,lx,rx));
+    return res;
+}
+
+
+void ChatGptDeepSeek() // Date: 2025-04-19
+{                      // Time: 18:36:52 
+    int n;
+    cin>>n;
+    vector<vector<pii>>g(n+1,vector<pii>());
+    vector<array<int,3>>edge(n);
+    for(int i=1;i<n;i++){
+        int u,v,w;
+        cin>>u>>v>>w;
+        edge[i]={u,v,w};
+        g[u].push_back({v,w}),g[v].push_back({u,w});
+    }
+    int cntd=0;
+    vi a(n+1);
+    auto dfs1=[&](auto&& self,int u,int pre)->void{
+        siz[u]=1;
+        dep[u]=dep[pre]+1;
+        fa[u]=pre;
+        for(auto [v,w]:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            siz[u]+=siz[v];
+            if(son[u]==0||siz[son[u]]<siz[v])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto [v,w]:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    for(int i=1;i<n;i++){
+        auto [u,v,w]=edge[i];
+        if(dep[u]>dep[v]) swap(u,v);
+        change(1,1,n,dfn[v],w);
+    }
+    string op;
+    while(cin>>op&&op!="Stop"){
+        if(op=="Change"){
+            int k,x;
+            cin>>k>>x;
+            auto [u,v,w]=edge[k];
+            if(dep[u]>dep[v]) swap(u,v);
+            change(1,1,n,dfn[v],x);
+        }else if(op=="Cover"){
+            int u,v,x;
+            cin>>u>>v>>x;
+            while(top[u]!=top[v]){
+                if(dep[top[u]]<dep[top[v]]) swap(u,v);
+                cover(1,1,n,dfn[top[u]],dfn[u],x);
+                u=fa[top[u]];
+            }
+            if(dep[u]>dep[v]) swap(u,v);
+            cover(1,1,n,dfn[u]+1,dfn[v],x);
+        }else if(op=="Add"){
+            int u,v,x;
+            cin>>u>>v>>x;
+            while(top[u]!=top[v]){
+                if(dep[top[u]]<dep[top[v]]) swap(u,v);
+                add(1,1,n,dfn[top[u]],dfn[u],x);
+                u=fa[top[u]];
+            }
+            if(dep[u]>dep[v]) swap(u,v);
+            add(1,1,n,dfn[u]+1,dfn[v],x);
+        }else{
+            int u,v;
+            cin>>u>>v;
+            int res=0;
+            while(top[u]!=top[v]){
+                if(dep[top[u]]<dep[top[v]]) swap(u,v);
+                cmax(res,query(1,1,n,dfn[top[u]],dfn[u]));
+                u=fa[top[u]];
+            }
+            if(dep[u]>dep[v]) swap(u,v);
+            cmax(res,query(1,1,n,dfn[u]+1,dfn[v]));
+            cout<<res<<'\n';
+        }
+    }
 }
 ```
