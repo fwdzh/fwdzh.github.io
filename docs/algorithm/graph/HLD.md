@@ -397,6 +397,108 @@ void ChatGptDeepSeek() // Date: 2025-04-18
 }
 ```
 
+### [P4116 Qtree3](https://www.luogu.com.cn/problem/P4116)
+
+常规操作，单点修改和区间 find first $0/1$ 。可以不用线段树，可以用 set ，一条重链整一个。我写的线段树，我说咋一直 TLE ， 单点修改肯定是 $\log n$ 复杂度，区间查询也是，咋会超时呢？
+
+其实是 dfs2 里忘记 siz[u]+=siz[v] 了。。。不过好歹是自己找到了。这种低级的错误真别犯了。==如果以后遇到 TLE 或 WA== ，可以输出看看剖分得对不对，检查下线段树有没有大于小于写错，变量位置有没有错。
+
+```cpp
+constexpr int N = 100000+5;
+int siz[N],fa[N],dep[N],son[N],dfn[N],top[N],seg[N];
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+pii tr[N<<2];
+
+pii merge(pii x,pii y)
+{
+    pii z;
+    z.fi=min(x.fi,y.fi),z.se=min(x.se,y.se);
+    return z;
+}
+void build(int p,int l,int r)
+{
+    if(l==r){
+        tr[p]={l,INF};
+        return;
+    }
+    build(ls,l,mi),build(rs,mi+1,r);
+    tr[p]=merge(tr[ls],tr[rs]);
+}
+void change(int p,int l,int r,int i)
+{
+    if(l==r){
+        swap(tr[p].fi,tr[p].se);
+        return;
+    }
+    if(i<=mi) change(ls,l,mi,i);
+    else change(rs,mi+1,r,i);
+    tr[p]=merge(tr[ls],tr[rs]);
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(lx>rx) return INF;
+    if(l>=lx&&r<=rx) return tr[p].se;
+    int res=INF;
+    if(lx<=mi) cmin(res,query(ls,l,mi,lx,rx));
+    if(rx>mi) cmin(res,query(rs,mi+1,r,lx,rx));
+    return res;
+}
+void ChatGptDeepSeek() // Date: 2025-04-20
+{                      // Time: 11:07:35 
+    int n,q;
+    cin>>n>>q;
+    vector<vi>g(n+1,vi());
+    for(int i=1;i<n;i++){
+        int u,v;
+        cin>>u>>v;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1,dep[u]=dep[pre]+1,fa[u]=pre;
+        for(auto v:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            siz[u]+=siz[v];
+            if(son[u]==0||siz[v]>siz[son[u]])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        seg[cntd]=u;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto v:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    build(1,1,n);
+    while(q--){
+        int op,x;
+        cin>>op>>x;
+        if(op==0) change(1,1,n,dfn[x]);
+        else{
+            int res=INF;
+            while(top[x]!=1){
+                cmin(res,query(1,1,n,dfn[top[x]],dfn[x]));
+                x=fa[top[x]];
+            }
+            cmin(res,query(1,1,n,1,dfn[x]));
+            cout<<(res==INF?-1:seg[res])<<'\n';
+        }
+    }
+}
+```
+
 ## 点权转边权
 
 其实没啥不一样，就是边权转成深度更深的那个点的点权。更新的时候，只有两点在同一重链时，需要把区间改成 $dfn_x+1,dfn_y$ ， 其他地方是不需要改的。记得线段树也要判一下范围。
@@ -671,6 +773,200 @@ void ChatGptDeepSeek() // Date: 2025-04-19
             }
             if(dep[u]>dep[v]) swap(u,v);
             cmax(res,query(1,1,n,dfn[u]+1,dfn[v]));
+            cout<<res<<'\n';
+        }
+    }
+}
+```
+
+### [P3950 部落冲突](https://www.luogu.com.cn/problem/P3950)
+
+也是转换成边权的情况，而且仅有单点修改，所以树状数组应该也是可做的。
+
+```cpp
+constexpr int N = int(3e5)+5;
+int siz[N],fa[N],dep[N],son[N],top[N],dfn[N];
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+
+int tr[N<<2];
+
+void add(int p,int l,int r,int i,int x)
+{
+    if(l==r){
+        tr[p]+=x;
+        return;
+    }
+    if(i<=mi) add(ls,l,mi,i,x);
+    else add(rs,mi+1,r,i,x);
+    tr[p]=tr[ls]+tr[rs];
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(lx>rx) return 0;
+    if(l>=lx&&r<=rx) return tr[p];
+    ll res=0;
+    if(lx<=mi) res+=query(ls,l,mi,lx,rx);
+    if(rx>mi) res+=query(rs,mi+1,r,lx,rx);
+    return res;
+}
+
+void ChatGptDeepSeek() // Date: 2025-04-20
+{                      // Time: 10:18:40 
+    int n,m; cin>>n>>m;
+    vector<pii>edge(n);
+    vector<vi>g(n+1,vi());
+    for(int i=1;i<n;i++){
+        int u,v; cin>>u>>v;
+        edge[i]={u,v};
+        g[v].push_back(u),g[u].push_back(v);
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1,fa[u]=pre,dep[u]=dep[pre]+1;
+        for(auto v:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            if(son[u]==0||siz[son[u]]<siz[v])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto v:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    vector<pii>war;
+    for(int i=1;i<=m;i++){
+        char op;
+        cin>>op;
+        if(op=='Q'){
+            int x,y;
+            cin>>x>>y;
+            bool ok=false;
+            while(top[x]!=top[y]){
+                if(dep[top[x]]<dep[top[y]]) swap(x,y);
+                if(query(1,1,n,dfn[top[x]],dfn[x])) ok=true;
+                x=fa[top[x]];
+            }
+            if(dep[x]>dep[y]) swap(x,y);
+            if(query(1,1,n,dfn[x]+1,dfn[y])) ok=true;
+            cout<<(ok?"No":"Yes")<<'\n';
+        }else if(op=='C'){
+            int p,q;
+            cin>>p>>q;
+            war.push_back({p,q});
+            if(dep[p]>dep[q]) swap(p,q);
+            add(1,1,n,dfn[q],1);
+        }else{
+            int k; cin>>k;
+            auto [p,q]=war[k-1];
+            if(dep[p]>dep[q]) swap(p,q);
+            add(1,1,n,dfn[q],-1);
+        }
+    }
+}
+```
+
+### [P4114 Qtree1](https://www.luogu.com.cn/problem/P4114)
+
+单点修改和区间 max 查询。
+
+```cpp
+constexpr int N = int(1e5)+5;
+int siz[N],dep[N],fa[N],son[N],dfn[N],top[N];
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+int tr[N<<2];
+
+void change(int p,int l,int r,int i,int x){
+    if(l==r){
+        tr[p]=x;
+        return;
+    }
+    if(i<=mi) change(ls,l,mi,i,x);
+    else change(rs,mi+1,r,i,x);
+    tr[p]=max(tr[ls],tr[rs]);
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(lx>rx) return 0;
+    if(l>=lx&&r<=rx) return tr[p];
+    int res=0;
+    if(lx<=mi) cmax(res,query(ls,l,mi,lx,rx));
+    if(rx>mi) cmax(res,query(rs,mi+1,r,lx,rx));
+    return res;
+}
+void ChatGptDeepSeek() // Date: 2025-04-20
+{                      // Time: 10:50:44 
+    int n;
+    cin>>n;
+    vector<array<int,3>>edge(n);
+    vector<vector<pii>>g(n+1,vector<pii>());
+    for(int i=1;i<n;i++){
+        int u,v,w;
+        cin>>u>>v>>w;
+        edge[i]={u,v,w};
+        g[u].push_back({v,w});
+        g[v].push_back({u,w});
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1,dep[u]=dep[pre]+1,fa[u]=pre;
+        for(auto [v,w]:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            siz[u]+=siz[v];
+            if(son[u]==0||siz[v]>siz[son[u]])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto [v,w]:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    for(int i=1;i<n;i++){
+        auto &[u,v,w]=edge[i];
+        if(dep[u]>dep[v]) swap(u,v);
+        change(1,1,n,dfn[v],w);
+    }
+    string op;
+    while(cin>>op&&op!="DONE"){
+        if(op=="CHANGE"){
+            int i,t;
+            cin>>i>>t;
+            auto [u,v,w]=edge[i];
+            change(1,1,n,dfn[v],t);
+        }else{
+            int x,y;
+            cin>>x>>y;
+            int res=0;
+            while(top[x]!=top[y]){
+                if(dep[top[x]]<dep[top[y]]) swap(x,y);
+                cmax(res,query(1,1,n,dfn[top[x]],dfn[x]));
+                x=fa[top[x]];
+            }
+            if(dep[x]>dep[y]) swap(x,y);
+            cmax(res,query(1,1,n,dfn[x]+1,dfn[y]));
             cout<<res<<'\n';
         }
     }
