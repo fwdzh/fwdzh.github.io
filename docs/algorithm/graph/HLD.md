@@ -499,6 +499,176 @@ void ChatGptDeepSeek() // Date: 2025-04-20
 }
 ```
 
+### [P6098 [USACO19FEB] Cow Land G](https://www.luogu.com.cn/problem/P6098)
+
+基础题，单点修改和查询区间异或和。
+
+```cpp
+constexpr int N = int(1e5)+5;
+int siz[N],fa[N],dep[N],son[N],dfn[N],top[N];
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+int tr[N<<2];
+
+void change(int p,int l,int r,int i,int val)
+{
+    if(l==r){
+        tr[p]=val;
+        return;
+    }
+    if(i<=mi) change(ls,l,mi,i,val);
+    else change(rs,mi+1,r,i,val);
+    tr[p]=tr[ls]^tr[rs];
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(l>=lx&&r<=rx) return tr[p];
+    int res=0;
+    if(lx<=mi) res^=query(ls,l,mi,lx,rx);
+    if(rx>mi) res^=query(rs,mi+1,r,lx,rx);
+    return res;
+}
+
+void ChatGptDeepSeek() // Date: 2025-04-21
+{                      // Time: 10:38:03 
+    int n,q;
+    cin>>n>>q;
+    vi e(n+1);
+    for(int i=1;i<=n;i++) cin>>e[i];
+    vector<vi>g(n+1,vi());
+    for(int i=1;i<n;i++){
+        int u,v;
+        cin>>u>>v;
+        g[u].push_back(v),g[v].push_back(u);
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1,dep[u]=dep[pre]+1,fa[u]=pre;
+        for(auto v:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            siz[u]+=siz[v];
+            if(son[u]==0||siz[v]>siz[son[u]])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto v:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    for(int i=1;i<=n;i++)
+        change(1,1,n,dfn[i],e[i]);
+    while(q--){
+        int op,x,y;
+        cin>>op>>x>>y;
+        if(op==1) change(1,1,n,dfn[x],y);
+        else{
+            int res=0;
+            while(top[x]!=top[y]){
+                if(dep[top[x]]<dep[top[y]]) swap(x,y);
+                res^=query(1,1,n,dfn[top[x]],dfn[x]);
+                x=fa[top[x]];
+            }
+            if(dep[x]>dep[y]) swap(x,y);
+            res^=query(1,1,n,dfn[x],dfn[y]);
+            cout<<res<<'\n';
+        }
+    }
+}
+```
+
+### [P4092 [HEOI2016/TJOI2016] 树](https://www.luogu.com.cn/problem/P4092)
+
+简单题，但是 WA TLE 几次。。。写代码最好专注一点，最好确保每一行都不要错，不然代码长了很难找啊，而且吃罚时。
+
+```cpp
+constexpr int N = int(1e5)+5;
+int siz[N],fa[N],dep[N],son[N],dfn[N],top[N],seg[N];
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+int tr[N<<2];
+
+void add(int p,int l,int r,int i)
+{
+    if(l==r){
+        tr[p]=l;
+        return;
+    }
+    if(i<=mi) add(ls,l,mi,i);
+    else add(rs,mi+1,r,i);
+    tr[p]=max(tr[ls],tr[rs]);
+}
+int query(int p,int l,int r,int lx,int rx)
+{
+    if(l>=lx&&r<=rx) return tr[p];
+    int res=0;
+    if(lx<=mi) cmax(res,query(ls,l,mi,lx,rx));
+    if(rx>mi) cmax(res,query(rs,mi+1,r,lx,rx));
+    return res;
+}
+void ChatGptDeepSeek() // Date: 2025-04-21
+{                      // Time: 11:08:20 
+    int n,q;
+    cin>>n>>q;
+    vector<vi>g(n+1,vi());
+    for(int i=1;i<n;i++){
+        int u,v;
+        cin>>u>>v;
+        g[u].push_back(v),g[v].push_back(u);
+    }
+    auto dfs1=[&](auto &&self,int u,int pre)->void{
+        siz[u]=1,dep[u]=dep[pre]+1,fa[u]=pre;
+        for(auto v:g[u]){
+            if(v==pre) continue;
+            self(self,v,u);
+            siz[u]+=siz[v];
+            if(son[u]==0||siz[v]>siz[son[u]])
+                son[u]=v;
+        }
+    };
+    dfs1(dfs1,1,0);
+    int cntd=0;
+    auto dfs2=[&](auto &&self,int u,int pre)->void{
+        dfn[u]=++cntd;
+        seg[cntd]=u;
+        if(son[pre]==u) top[u]=top[pre];
+        else top[u]=u;
+        if(son[u]) self(self,son[u],u);
+        for(auto v:g[u]){
+            if(v==pre||v==son[u]) continue;
+            self(self,v,u);
+        }
+    };
+    dfs2(dfs2,1,0);
+    add(1,1,n,1);
+    while(q--){
+        char op;
+        int x;
+        cin>>op>>x;
+        if(op=='C') add(1,1,n,dfn[x]);
+        else{
+            int res=0;
+            while(top[x]!=1){
+                cmax(res,query(1,1,n,dfn[top[x]],dfn[x]));
+                x=fa[top[x]];
+            }
+            cmax(res,query(1,1,n,1,dfn[x]));
+            cout<<seg[res]<<'\n';
+        }
+    }
+}
+```
+
 ## 点权转边权
 
 其实没啥不一样，就是边权转成深度更深的那个点的点权。更新的时候，只有两点在同一重链时，需要把区间改成 $dfn_x+1,dfn_y$ ， 其他地方是不需要改的。记得线段树也要判一下范围。
