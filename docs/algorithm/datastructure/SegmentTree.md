@@ -2,6 +2,8 @@
 
 ## 最大子段和 + 单点修改
 
+### [P4513 小白逛公园](https://www.luogu.com.cn/problem/P4513)
+
 Codeforces 的 EDU 的原题，当时学得很难受啊，就是莫名其妙看不懂的，很坐牢，估计也是花了很久才 AC 那个题。但是前两天就在洛谷看到一个跟这一样的题，是个蓝题，然后就没有难受了。
 
 其实只需要知道怎么合并就好写了。我们需要知道最大子段和，那么有哪些情况呢？
@@ -114,3 +116,75 @@ void ChatGptDeepSeek()
 ```
 
 但是 query 会报无返回值的警告。。不过大家很多都是这样写的，而且这里其他情况返回值也没有啥意义的。
+
+## 直接修改
+
+有的题可能我们不得不只能修改每个叶子节点，无法使用懒标记，但是有的题给叶子节点修改的次数是有限的。
+
+### [P4145 上帝造题的七分钟 2 / 花神游历各国](https://www.luogu.com.cn/problem/P4145)
+
+开方操作最多 $6$ 次，一个数字就会变成 $1$ 。所以每个叶子节点最多改 $6$ 次，如果区间最大值是 $1$ 就不用管这个区间。
+
+```cpp
+constexpr int N = 100005;
+
+#define ls p<<1
+#define rs p<<1|1
+#define mi ((l+r)>>1)
+struct node{
+    ll max,sum;
+};
+node tr[N<<2];
+void push_up(int p)
+{
+    tr[p].sum = tr[ls].sum + tr[rs].sum;
+    tr[p].max = max(tr[ls].max,tr[rs].max);
+}
+void upd(int p,int l,int r,int lx,int rx)
+{
+    if(tr[p].max == 1) return;
+    if(l == r){
+        tr[p].sum = tr[p].max = (int)sqrt(tr[p].max);
+        return;
+    }
+    if(lx <= mi) upd(ls,l,mi,lx,rx);
+    if(rx > mi) upd(rs,mi+1,r,lx,rx);
+    push_up(p);
+}
+ll query(int p,int l,int r,int lx,int rx)
+{
+    if(l >= lx && r <= rx) return tr[p].sum;
+    ll res=0;
+    if(lx <= mi) res += query(ls,l,mi,lx,rx);
+    if(rx > mi) res += query(rs,mi+1,r,lx,rx);
+    return res;
+}
+void ChatGptDeepSeek() // Date: 2025-04-22
+{                      // Time: 14:50:52 
+    int n;
+    cin >> n;
+    vl a(n+1);
+    for(int i = 1; i <= n; i++)
+        cin >> a[i];
+    auto build=[&](auto &&self,int p,int l,int r)->void{
+        if(l==r){
+            tr[p]={a[l],a[l]};
+            return;
+        }
+        self(self,ls,l,mi),self(self,rs,mi+1,r);
+        push_up(p);
+    };
+    build(build,1,1,n);
+    int q;
+    cin >> q;
+    while(q--){
+        int op,l,r;
+        cin >> op >> l >> r;
+        if(l > r) swap(l,r);
+        if(op == 0)
+            upd(1,1,n,l,r);
+        else
+            cout<<query(1,1,n,l,r)<<'\n';
+    }
+}
+```
