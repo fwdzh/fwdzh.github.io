@@ -208,6 +208,9 @@ nav:
       - 莫队算法: algorithm/datastructure/mo-algo.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
+    - 数学:
+      - 线性代数:
+        - 矩阵: algorithm/math/linear-algebra.md
     - 图论:
       - 树链剖分: algorithm/graph/HLD.md
       - 二分图: algorithm/graph/BipartiteGraph.md
