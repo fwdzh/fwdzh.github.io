@@ -205,6 +205,7 @@ nav:
       - 树状数组: algorithm/datastructure/Fenwick.md
       - 笛卡尔树: algorithm/datastructure/Cartesian-tree.md
       - 线段树: algorithm/datastructure/SegmentTree.md
+      - 莫队算法: algorithm/datastructure/mo-algo.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
     - 图论:
