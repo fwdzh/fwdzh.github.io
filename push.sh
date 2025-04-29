@@ -4,7 +4,7 @@ sss="update on $(date '+%Y-%m-%d %H:%M:%S')"
 if [ -z "$1" ]; then
   msg="update on $(date '+%Y-%m-%d %H:%M:%S')"
 else
-  msg=""$1" $(date '+%Y-%m-%d %H:%M:%S')"
+  msg=""$*" $(date '+%Y-%m-%d %H:%M:%S')"
 fi
 
 # echo "$msg"
