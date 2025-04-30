@@ -15,4 +15,4 @@ git push
 cd ../cp_code
 git add .
 git commit -m "$sss"
-git push
+git push && git push github master

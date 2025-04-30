@@ -204,7 +204,9 @@ nav:
     - 数据结构:
       - 树状数组: algorithm/datastructure/Fenwick.md
       - 笛卡尔树: algorithm/datastructure/Cartesian-tree.md
-      - 线段树: algorithm/datastructure/SegmentTree.md
+      - 线段树: 
+        - 线段树基础: algorithm/datastructure/SegmentTree/SegmentTree.md
+        - 线段树合并: algorithm/datastructure/SegmentTree/seg-merge.md
       - 莫队算法: algorithm/datastructure/mo-algo.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
