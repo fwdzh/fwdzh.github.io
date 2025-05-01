@@ -11,7 +11,7 @@ git commit -m "$msg"
 git push
 git push github master
 
-Set-Location ..\blog
+Set-Location ..\cp_code
 $sss = "update on $time"
 git add .
 git commit -m "$sss"
