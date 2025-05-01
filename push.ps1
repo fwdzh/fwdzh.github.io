@@ -16,4 +16,4 @@ $sss = "update on $time"
 git add .
 git commit -m "$sss"
 git push
-Set-Location ..\cp_code
+Set-Location ..\fwdzh.github.io
