@@ -17,4 +17,4 @@ git add .
 git commit -m "$sss"
 git push
 git push gitee master
-Set-Location ..\fwdzh.github.io
+Set-Location ..\blog
