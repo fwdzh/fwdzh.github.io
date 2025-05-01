@@ -9,7 +9,7 @@ if ($args.Count -eq 0) {
 git add .
 git commit -m "$msg"
 git push
-git push gitee master
+git push gitee main
 
 Set-Location ..\cp_code
 $sss = "update on $time"
