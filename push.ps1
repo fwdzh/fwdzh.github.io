@@ -14,7 +14,8 @@ git push gitee main
 Set-Location ..\cp_code
 $sss = "update on $time"
 git add .
-git commit -m "$sss"
+git commit -m "$msg"
+# git commit -m "$sss"
 git push
 git push gitee master
 Set-Location ..\blog
