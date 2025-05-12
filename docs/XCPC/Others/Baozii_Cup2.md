@@ -2,6 +2,8 @@
 
 > 2025-05-11
 
+gym: https://codeforces.com/gym/105883
+
 A 和 K 之后再来补。
 
 ## E

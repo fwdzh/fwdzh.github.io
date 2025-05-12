@@ -136,10 +136,6 @@ nav:
       - 第 10 届 CCPC 中国大学生程序设计竞赛郑州站: XCPC/Regional/2024Zhengzhou.md
       - 第 49 届 ICPC 国际大学生程序设计竞赛区域赛上海站: XCPC/Regional/2024Shanghai.md
       - 第 49 届 ICPC 国际大学生程序设计竞赛区域赛杭州站: XCPC/Regional/2024Hangzhou.md
-    - 2025“钉耙编程”中国大学生算法设计春季联赛:
-        - 第四场: cp_solving/2025hdu-spring/04.md
-        - 第三场: cp_solving/2025hdu-spring/03.md
-        - 第一场: cp_solving/2025hdu-spring/01.md
     - 省赛&邀请赛:
       - 第 49 届 ICPC 国际大学生程序设计竞赛邀请赛武汉站: XCPC/Invitational/24Wuhan.md
       - 2023年第五届河南省CCPC大学生程序设计竞赛: XCPC/Provincial/2023Henan.md
@@ -148,10 +144,15 @@ nav:
       - 2024年四川省大学生程序设计竞赛: XCPC/Provincial/2024Sichuan.md
     - 校赛:
       - 2024北京航空航天大学程序设计竞赛 决赛: XCPC/School/2024BUAA.md
+      - 2025华中农业大学程序设计竞赛: XCPC/School/2025HZAU.md
     - 其他比赛:
       - Baozii Cup 2: XCPC/Others/Baozii_Cup2.md
     - 蓝桥杯:
       - 2025年蓝桥杯省赛B组 C/C++: XCPC/Lanqiao/2025/Provincial/CPP_B.md
+    - 2025“钉耙编程”中国大学生算法设计春季联赛:
+        - 第四场: cp_solving/2025hdu-spring/04.md
+        - 第三场: cp_solving/2025hdu-spring/03.md
+        - 第一场: cp_solving/2025hdu-spring/01.md
     
   - 刷题记录: 
     - Codeforces Rating 1900+ 题目: cp_solving/2025/0420.md
