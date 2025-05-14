@@ -4,6 +4,8 @@
 
 gym: https://codeforces.com/gym/105891
 
+[![pEjewy4.png](https://s21.ax1x.com/2025/05/14/pEjewy4.png)](https://imgse.com/i/pEjewy4)
+
 打挺差的一集，VP只AC了四题。有一题卡很简单的地方了。虽然只VP三小时。回寝室又看了两小时。
 
 ## A

@@ -4,6 +4,8 @@
 
 gym: https://codeforces.com/gym/105887
 
+[![pEjedlF.png](https://s21.ax1x.com/2025/05/14/pEjedlF.png)](https://imgse.com/i/pEjedlF)
+
 这场做得挺顺，只写了两小时，五题。
 
 但这写了的几题难度都太低，难点的不好做。
