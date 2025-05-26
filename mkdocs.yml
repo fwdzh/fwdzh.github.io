@@ -161,6 +161,7 @@ nav:
   - 刷题记录: 
     - 100道洛谷蓝题:
       - index: cp_solving/100_blue/main.md
+      - P3694 邦邦的大合唱站队: cp_solving/100_blue/P3694.md
       - P6088 [JSOI2015] 字符串树: cp_solving/100_blue/P6088.md
     - Codeforces Rating 1900+ 题目: cp_solving/2025/0420.md
     - 成长记录: cp_solving/0313.md
