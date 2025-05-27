@@ -161,6 +161,7 @@ nav:
   - 刷题记录: 
     - 100道洛谷蓝题:
       - index: cp_solving/100_blue/main.md
+      - P1967 [NOIP 2013 提高组] 货车运输: cp_solving/100_blue/P1967.md
       - P1450 [HAOI2008] 硬币购物: cp_solving/100_blue/P1450.md
       - P3694 邦邦的大合唱站队: cp_solving/100_blue/P3694.md
       - P6088 [JSOI2015] 字符串树: cp_solving/100_blue/P6088.md
