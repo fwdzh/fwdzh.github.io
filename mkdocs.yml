@@ -219,6 +219,7 @@ nav:
       - 字典树: algorithm/string/trie.md
       - KMP: algorithm/string/KMP.md
     - 数据结构:
+      - ST 表: algorithm/datastructure/sparse-table.md
       - 树状数组: algorithm/datastructure/Fenwick.md
       - 笛卡尔树: algorithm/datastructure/Cartesian-tree.md
       - 线段树: 
