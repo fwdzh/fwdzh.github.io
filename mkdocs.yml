@@ -232,6 +232,8 @@ nav:
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
     - 数学:
+      - 组合数学:
+        - 排列组合: algorithm/math/combinatorics/conbination.md
       - 线性代数:
         - 矩阵: algorithm/math/linear-algebra/matrix.md
     - 图论:
