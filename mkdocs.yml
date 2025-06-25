@@ -160,6 +160,8 @@ nav:
         - 第一场: cp_solving/2025hdu-spring/01.md
     
   - 刷题记录: 
+    - 日常记录表:
+      - 日常记录1: daily/table/01.md
     - 100道洛谷蓝题:
       - index: cp_solving/100_blue/main.md
       - P1967 [NOIP 2013 提高组] 货车运输: cp_solving/100_blue/P1967.md
