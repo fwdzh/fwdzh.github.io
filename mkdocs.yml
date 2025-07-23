@@ -131,6 +131,8 @@ extra_css:
   - stylesheets/extra.css
 nav:
   - 首页: index.md
+  - XCPC一百天:
+    - 第1天: XCPC_100days/day001.md
   - XCPC:
     - 区域赛:
       - 第 10 届 CCPC 中国大学生程序设计竞赛郑州站: XCPC/Regional/2024Zhengzhou.md
