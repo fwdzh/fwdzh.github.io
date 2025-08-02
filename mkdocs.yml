@@ -131,11 +131,6 @@ extra_css:
   - stylesheets/extra.css
 nav:
   - 首页: index.md
-  - XCPC一百天:
-    - 第 4 天: XCPC_100days/day004.md
-    - 第 3 天: XCPC_100days/day003.md
-    - 第 2 天: XCPC_100days/day002.md
-    - 第 1 天: XCPC_100days/day001.md
   - XCPC:
     - 区域赛:
       - 第 10 届 CCPC 中国大学生程序设计竞赛郑州站: XCPC/Regional/2024Zhengzhou.md
@@ -165,8 +160,8 @@ nav:
         - 第一场: cp_solving/2025hdu-spring/01.md
     
   - 刷题记录: 
-    - 日常记录表:
-      - 日常记录1: daily/table/01.md
+    # - 日常记录表:
+    #   - 日常记录1: daily/table/01.md
     - 100道洛谷蓝题:
       - index: cp_solving/100_blue/main.md
       - P1967 [NOIP 2013 提高组] 货车运输: cp_solving/100_blue/P1967.md
