@@ -251,6 +251,7 @@ nav:
       - 线性代数:
         - 矩阵: algorithm/math/linear-algebra/matrix.md
     - 图论:
+      - 强连通分量: algorithm/graph/scc.md
       - 树链剖分: algorithm/graph/HLD.md
       - 二分图: algorithm/graph/BipartiteGraph.md
     - 其他:
