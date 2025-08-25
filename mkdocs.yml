@@ -167,8 +167,8 @@ nav:
         - 第一场: cp_solving/2025hdu-spring/01.md
     
   - 刷题记录: 
-    - 日常记录表:
-      - 日常记录1: daily/table/01.md
+    # - 日常记录表:
+    #   - 日常记录1: daily/table/01.md
     - 100道洛谷蓝题:
       - index: cp_solving/100_blue/main.md
       - P1967 [NOIP 2013 提高组] 货车运输: cp_solving/100_blue/P1967.md
@@ -184,6 +184,7 @@ nav:
     - _1: cp_solving/1.md
   - contest:
     - Codeforces:
+      - Atto Round 1 (Codeforces Round 1041, Div. 1 + Div. 2): cp_solving/Codeforces/2127.md
       - Educational Codeforces Round 180 (Rated for Div. 2): cp_solving/Codeforces/2112.md
       - Codeforces Round 1033 (Div. 2) and CodeNite 2025: cp_solving/Codeforces/2120.md
       - Educational Codeforces Round 179 (Rated for Div. 2): cp_solving/Codeforces/2111.md
@@ -219,6 +220,7 @@ nav:
       - 牛客周赛 Round 82: cp_solving/nowcoder/102303.md
 
   - 日常:
+    - CF2117G + 23合肥区域赛J: daily/2025/0801.md
     - 新的开始: daily/2025/0630.md
     - 2025-04-05: daily/2025/0405.md
     - 2025-04-01: daily/2025/0401.md
