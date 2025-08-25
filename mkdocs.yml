@@ -133,6 +133,7 @@ nav:
   - 首页: index.md
   - final:
     - P2607 [ZJOI2008] 骑士: cp_solving/final/P2607.md
+    - P4570 [BJWC2011] 元素: cp_solving/final/P4570.md
     - P4301 [CQOI2013] 新Nim游戏: cp_solving/final/P4301.md
     - P2495 [SDOI2011] 消耗战: cp_solving/final/P2495.md
   # - XCPC一百天:
