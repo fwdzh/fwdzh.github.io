@@ -133,7 +133,8 @@ nav:
   - 首页: index.md
   - final:
     - P2607 [ZJOI2008] 骑士: cp_solving/final/P2607.md
-    - P4045 [JSOI2009] 密码: cp_solving/final/4045.md
+    - P5522 [yLOI2019] 棠梨煎雪: cp_solving/final/P5522.md
+    - P4045 [JSOI2009] 密码: cp_solving/final/P4045.md
     - P5357 【模板】AC 自动机: cp_solving/final/P5357.md
     - P1972 [SDOI2009] HH的项链: cp_solving/final/P1972.md
     - P4570 [BJWC2011] 元素: cp_solving/final/P4570.md
