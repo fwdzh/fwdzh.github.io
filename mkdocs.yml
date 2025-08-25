@@ -246,11 +246,14 @@ nav:
       - 莫队算法: algorithm/datastructure/mo-algo.md
     - 数论:
       - 数论基础: algorithm/numbertheory/basic.md
+
     - 数学:
       - 组合数学:
         - 排列组合: algorithm/math/combinatorics/combination.md
       - 线性代数:
         - 矩阵: algorithm/math/linear-algebra/matrix.md
+      - 博弈论:
+        - 公平组合游戏: algorithm/game/impartial-game.md
     - 图论:
       - 强连通分量: algorithm/graph/scc.md
       - 树链剖分: algorithm/graph/HLD.md
