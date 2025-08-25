@@ -133,6 +133,7 @@ nav:
   - 首页: index.md
   - final:
     - P2607: cp_solving/final/P2607.md
+    - P2495: cp_solving/final/P2495.md
   # - XCPC一百天:
   #   - 第 4 天: XCPC_100days/day004.md
   #   - 第 3 天: XCPC_100days/day003.md
