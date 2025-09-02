@@ -132,6 +132,7 @@ extra_css:
 nav:
   - 首页: index.md
   - final:
+    - P1600 [NOIP 2016 提高组] 天天爱跑步: cp_solving/final/P1600.md
     - P2607 [ZJOI2008] 骑士: cp_solving/final/P2607.md
     - P2515 [HAOI2010] 软件安装: cp_solving/final/P2515.md
     - P2272 [ZJOI2007] 最大半连通子图: cp_solving/final/P2272.md
