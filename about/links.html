@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友情链接</title>
+    <link rel="icon" href="https://s21.ax1x.com/2025/03/31/pEsaDjU.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --background: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--background);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .link-card:hover::before {
+            width: 8px;
+        }
+
+        /*.link-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }*/
+
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 1.5rem;
+            overflow: hidden;
+            /* 确保图片不超出容器 */
+            background: transparent;
+            /* 移除原来的背景色 */
+            padding: 0;
+            /* 移除内边距 */
+        }
+
+        .link-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 保持图片比例并填满容器 */
+            display: block;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+
+        .link-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-category {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: #e9ecef;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #495057;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">友情链接</h1>
+            <div class="category-filter" id="filter">
+                <button class="filter-btn active" data-category="all">全部</button>
+                <button class="filter-btn" data-category="blog">Blog</button>
+                <button class="filter-btn" data-category="algo">Algorithm</button>
+                <button class="filter-btn" data-category="web">Website</button>
+                <button class="filter-btn" data-category="game">Game</button>
+                <button class="filter-btn" data-category="me">About Me</button>
+            </div>
+        </div>
+
+        <div class="links-grid" id="linksContainer"></div>
+    </div>
+
+    <script>
+
+        // 链接数据
+        const linksData = [
+            {
+                title: "Mashiro's Blog",
+                url: "https://skadi.wuyi.host/",
+                category: "blog",
+                // icon: "<i class='fas fa-code'></i>",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsanAA.jpg",
+                desc: ""
+            },
+            {
+                title: "Yugang's Blog",
+                url: "https://yuanshen.wuyi.host/",
+                category: "blog",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsae7d.jpg",
+                desc: ""
+            },
+
+            {
+                title: "My Codeforces",
+                url: "https://codeforces.com/profile/Zhangwuji",
+                category: "me",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsUITs.jpg",
+                desc: ""
+            },
+            {
+                title: "Mashiro's Codeforces",
+                url: "https://codeforces.com/profile/qiangwomingziNMB",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsanAA.jpg",
+                desc: ""
+            },
+            {
+                title: "Yugang's Codeforces",
+                url: "https://codeforces.com/profile/sakanaka",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsae7d.jpg",
+                desc: ""
+            },
+            {
+                title: "Tanxf's Codeforces",
+                url: "https://codeforces.com/profile/tanxf",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsal1f.jpg",
+                desc: ""
+            },
+            {
+                title: "Tovi's Codeforces",
+                url: "https://codeforces.com/profile/hbmy031440403",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsaouD.jpg",
+                desc: ""
+            },
+            {
+                title: "Sailor's Blog",
+                url: "https://blog.csdn.net/score69",
+                category: "blog",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsdpDg.jpg",
+                desc: ""
+            },
+            {
+                title: "Pihric's Luogu",
+                url: "https://www.luogu.com.cn/user/1208013",
+                category: "algo",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsa2NR.jpg",
+                desc: ""
+            },
+            {
+                title: "Wuchao's Website",
+                url: "https://123.wuyi.host",
+                category: "web",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsa2NR.jpg",
+                desc: ""
+            },
+            {
+                title: "Muyuxi's Codeforces",
+                url: "https://codeforces.com/profile/Muyuxii",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/3972050/title/f10d6b897ae8c9f8.jpg",
+                desc: ""
+            },
+            {
+                title: "GUAIKATTO's Codeforces",
+                url: "https://codeforces.com/profile/GUAIKATTO",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/4281054/title/b48cbf408f26cf69.jpg",
+                desc: ""
+            },
+            {
+                title: "LHJ's Codeforces",
+                url: "https://codeforces.com/profile/kujinganlai111",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/2848110/title/4bb0c929deff297b.jpg",
+                desc: ""
+            },
+
+            {
+                title: "Dragon66677750's Codeforces",
+                url: "https://codeforces.com/profile/Dragon66677750",
+                category: "algo",
+                icon: "https://userpic.codeforces.org/4574322/title/f9ed1f89046461cc.jpg",
+                desc: "学弟"
+            },
+            {
+                title: "My Luogu",
+                url: "https://www.luogu.com.cn/user/1239980",
+                category: "me",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsUITs.jpg",
+                desc: ""
+            },
+            {
+                title: "My Blog",
+                url: "https://blog.wuyi.host",
+                category: "me",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsUITs.jpg",
+                desc: ""
+            },
+            {
+                title: "Genshin Impact",
+                url: "https://ys.mihoyo.com",
+                category: "game",
+                icon: "https://s21.ax1x.com/2025/03/31/pEsaDjU.jpg",
+                desc: "原神，启动！"
+            },
+            {
+                title: "Arknights",
+                url: "https://ak.hypergryph.com/#index",
+                category: "game",
+                icon: "https://media.prts.wiki/thumb/4/4c/%E9%81%93%E5%85%B7_%E6%8A%80%E5%B7%A7%E6%A6%82%E8%A6%81%C2%B7%E5%8D%B73.png/160px-%E9%81%93%E5%85%B7_%E6%8A%80%E5%B7%A7%E6%A6%82%E8%A6%81%C2%B7%E5%8D%B73.png",
+                desc: "明日方舟，启动！"
+            },
+            // 可继续添加更多数据...
+        ];
+
+        // 初始化
+        // function initLinks() {
+        //     const container = document.getElementById('linksContainer');
+        //     container.innerHTML = linksData.map(link => `
+        //         <a href="${link.url}" class="link-card" data-category="${link.category}">
+        //             <div class="link-icon">${link.icon}</div>
+        //             <div class="link-content">
+        //                 <h3 class="link-title">${link.title}</h3>
+        //                 <p class="link-desc">${link.desc}</p>
+        //                 <span class="link-category">${link.category}</span>
+        //             </div>
+        //         </a>
+        //     `).join('');
+        // }
+        // 修改后的初始化函数（带错误处理）
+        function initLinks() {
+            try {
+                const container = document.getElementById('linksContainer');
+                if (!container) throw new Error('找不到linksContainer元素');
+
+                const htmlString = linksData.map(link => {
+                    if (!link.icon) console.warn('缺少图标路径:', link.title);
+                    return `
+                <a href="${link.url}" class="link-card" data-category="${link.category}" target="_blank">
+                    <div class="link-icon">
+                        ${link.icon ?
+                            `<img src="${link.icon}" alt="${link.title}图标">` :
+                            `<div class="placeholder-icon"></div>`}
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">${link.title}</h3>
+                        ${link.desc ? `<p class="link-desc">${link.desc}</p>` : ''}
+                        <span class="link-category">${link.category}</span>
+                    </div>
+                </a>
+            `;
+                }).join('');
+
+                container.innerHTML = htmlString;
+                console.log('成功生成', linksData.length, '个链接卡片');
+            } catch (error) {
+                console.error('初始化失败:', error);
+                container.innerHTML = `<p class="error">加载友情链接失败，请稍后重试</p>`;
+            }
+        }
+
+
+        // 分类过滤
+        document.getElementById('filter').addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                document.querySelectorAll('.filter-btn').forEach(btn =>
+                    btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const category = e.target.dataset.category;
+                document.querySelectorAll('.link-card').forEach(card => {
+                    card.style.display = (category === 'all' ||
+                        card.dataset.category === category) ? 'flex' : 'none';
+                });
+            }
+        });
+
+        // 卡片点击效果
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.link-card')) {
+                e.target.closest('.link-card').style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    e.target.closest('.link-card').style.transform = '';
+                }, 200);
+            }
+        });
+
+        // 初始化加载
+        initLinks();
+    </script>
+</body>
+
+</html>
